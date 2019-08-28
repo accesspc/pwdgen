@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from itertools import islice
 from pathlib import Path
+import argparse
 import os.path
 import subprocess
 import yaml
@@ -87,10 +88,61 @@ if config_file.is_file():
         config[k] = v
 
 # Parse command line arguments
-## TBD
+parser = argparse.ArgumentParser(description="Generate some passwords.")
+parser.add_argument("-c", "--count", metavar="INT", type=int, help="Password count (1..20)")
+parser.add_argument("-l", "--length", metavar="INT", type=int, help="Word count (1..20)")
+parser.add_argument("-X", "--padding_sep_char", metavar="INT", type=int, help="Padding separator character count (0..10)")
+parser.add_argument("-Y", "--padding_after_num", metavar="INT", type=int, help="Padding after number count (0..10)")
+parser.add_argument("-Z", "--padding_after_char", metavar="INT", type=int, help="Padding after character count (0..10)")
+parser.add_argument("--capital_mode", choices=["first", "all", "none"], help="Capitalization mode")
+parser.add_argument("--charlist", metavar="FILE", type=argparse.FileType('r'), help="Character list file")
+parser.add_argument("--wordlist", metavar="FILE", type=argparse.FileType('r'), help="Wordlist list file")
 
-# Do config checks
-## TBD
+args = parser.parse_args()
+
+if args.count is not None:
+    if args.count in range(1, 21):
+        config["count"] = args.count
+    else:
+        parser.print_usage()
+        parser.exit(status=1)
+
+if args.length is not None:
+    if args.length in range(1, 21):
+        config["length"] = args.length
+    else:
+        parser.print_usage()
+        parser.exit(status=1)
+
+if args.capital_mode is not None:
+    config["capital_mode"] = args.capital_mode
+
+if args.padding_sep_char is not None:
+    if args.padding_sep_char in range(0, 11):
+        config["padding_sep_char"] = args.padding_sep_char
+    else:
+        parser.print_usage()
+        parser.exit(status=1)
+
+if args.padding_after_num is not None:
+    if args.padding_after_num in range(0, 11):
+        config["padding_after_num"] = args.padding_after_num
+    else:
+        parser.print_usage()
+        parser.exit(status=1)
+
+if args.padding_after_char is not None:
+    if args.padding_after_char in range(0, 11):
+        config["padding_after_char"] = args.padding_after_char
+    else:
+        parser.print_usage()
+        parser.exit(status=1)
+
+if args.charlist is not None:
+    config["charlist"] = args.charlist
+
+if args.wordlist is not None:
+    config["wordlist"] = args.wordlist
 
 # Generate the actual password
 for i in range(0, config["count"]):
