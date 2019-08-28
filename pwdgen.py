@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from itertools import islice
 from pathlib import Path
+from random import random
 import argparse
 import os.path
 import subprocess
@@ -25,6 +26,8 @@ def capitalize(word):
         return word.capitalize()
     elif config["capital_mode"] == "all":
         return word.upper()
+    elif config["capital_mode"] == "rand":
+        return "".join((c.upper(), c)[random() > 0.5] for c in word)
     return word
 
 def generate_from_list(flist):
@@ -94,7 +97,7 @@ parser.add_argument("-l", "--length", metavar="#", type=int, help="Word count (1
 parser.add_argument("-x", "--padding_sep_char", metavar="#", type=int, help="Padding separator character count (0..10)")
 parser.add_argument("-y", "--padding_after_num", metavar="#", type=int, help="Padding after number count (0..10)")
 parser.add_argument("-z", "--padding_after_char", metavar="#", type=int, help="Padding after character count (0..10)")
-parser.add_argument("--capital_mode", choices=["first", "all", "none"], help="Capitalization mode")
+parser.add_argument("--capital_mode", choices=["first", "rand", "all", "none"], help="Capitalization mode")
 parser.add_argument("--charlist", metavar="FILE", type=argparse.FileType('r'), help="Character list file")
 parser.add_argument("--wordlist", metavar="FILE", type=argparse.FileType('r'), help="Wordlist list file")
 
