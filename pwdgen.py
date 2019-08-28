@@ -89,11 +89,11 @@ if config_file.is_file():
 
 # Parse command line arguments
 parser = argparse.ArgumentParser(description="Generate some passwords.")
-parser.add_argument("-c", "--count", metavar="INT", type=int, help="Password count (1..20)")
-parser.add_argument("-l", "--length", metavar="INT", type=int, help="Word count (1..20)")
-parser.add_argument("-X", "--padding_sep_char", metavar="INT", type=int, help="Padding separator character count (0..10)")
-parser.add_argument("-Y", "--padding_after_num", metavar="INT", type=int, help="Padding after number count (0..10)")
-parser.add_argument("-Z", "--padding_after_char", metavar="INT", type=int, help="Padding after character count (0..10)")
+parser.add_argument("-c", "--count", metavar="#", type=int, help="Password count (1..20)")
+parser.add_argument("-l", "--length", metavar="#", type=int, help="Word count (1..20)")
+parser.add_argument("-x", "--padding_sep_char", metavar="#", type=int, help="Padding separator character count (0..10)")
+parser.add_argument("-y", "--padding_after_num", metavar="#", type=int, help="Padding after number count (0..10)")
+parser.add_argument("-z", "--padding_after_char", metavar="#", type=int, help="Padding after character count (0..10)")
 parser.add_argument("--capital_mode", choices=["first", "all", "none"], help="Capitalization mode")
 parser.add_argument("--charlist", metavar="FILE", type=argparse.FileType('r'), help="Character list file")
 parser.add_argument("--wordlist", metavar="FILE", type=argparse.FileType('r'), help="Wordlist list file")
