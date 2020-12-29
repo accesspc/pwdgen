@@ -32,6 +32,7 @@ def capitalize(word):
 
 def generate_from_list(flist):
     num = generate_num(wccount(flist))
+    line = ""
     with open(flist) as f:
         try:
             if num > 0:
